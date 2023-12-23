@@ -1,0 +1,43 @@
+{% extends "core/basemenu.html" %} 
+
+{% block title %} Lista de Provincias {% endblock %}
+
+{% block content %}
+{% csrf_token %}
+<div class="card">
+    <div class="card-header">
+      <a name="" id="" class="btn btn-success" href="{% url 'crear_provincia' %}" role="button">Agregar nueva provincia</a>
+    </div>
+    <div class="card-body">
+      <h4 class="card-title">Provincias</h4>
+      <div class="table-responsive">
+        <table class="table table-primary">
+          <thead>
+            <tr>
+              <th scope="col">Codigo</th>
+              <th scope="col">Pais</th>
+              <th scope="col">Nombre</th>
+              <th scope="col">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for provincia in provincias %}
+            <tr class="">
+              <td scope="row">{{ provincia.idProvincia }}</td>
+              <td scope="row">{{ provincia.idPais }}</td>
+              <td>{{ provincia.nombre }}</td>
+              <td> 
+                <a name="" id="" class="btn btn-info" href="{% url 'editar_provincia' provincia.idProvincia %}" role="button">Editar</a>
+                <a name="" id="" class="btn btn-danger" href="{% url 'borrar_provincia' provincia.idProvincia %}" role="button">Borrar</a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="card-footer text-muted">
+    </div>
+  </div>
+
+{% endblock %}

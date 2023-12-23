@@ -1,0 +1,20 @@
+{% extends "core/basemenu.html" %} 
+
+{% block title %} Editar SubCircuito {% endblock %}
+
+{% block content %}
+{% csrf_token %}
+
+    <div class="card">
+        <div class="card-header">
+            Editar subCircuito
+        </div>
+        <div class="card-body">
+            <h4 class="card-title">Datos del subCircuito</h4>
+            {% include "subCircuito/form.html" %}
+        </div>
+        <div class="card-footer text-muted">
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,37 @@
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('', views.home, name='home'),
+    path('start/', views.start, name='start'),
+    path('signup/', views.signup, name='signup'),
+    path('logout/', views.signout, name='logout'),
+    path('signin/', views.signin, name='signin'),
+    path('paises/', views.paises, name='paises'),
+    path('pais/crear', views.crear_pais, name='crear_pais'),
+    path('pais/editar/<int:idPais>', views.editar_pais, name='editar_pais'),
+    path('pais/borrar/<int:idPais>', views.borrar_pais, name='borrar_pais'),
+    path('provincias/', views.provincias, name='provincias'),
+    path('provincia/crear', views.crear_provincia, name='crear_provincia'),
+    path('provincia/editar/<int:idProvincia>', views.editar_provincia, name='editar_provincia'),
+    path('provincia/borrar/<int:idProvincia>', views.borrar_provincia, name='borrar_provincia'),
+    path('distritos/', views.distritos, name='distritos'),
+    path('distrito/crear', views.crear_distrito, name='crear_distrito'),
+    path('distrito/editar/<int:idDistrito>', views.editar_distrito, name='editar_distrito'),
+    path('distrito/borrar/<int:idDistrito>', views.borrar_distrito, name='borrar_distrito'),
+    path('tipoPeticiones/', views.tipoPeticiones, name='tipoPeticiones'),
+    path('tipoPeticion/crear', views.crear_tipoPeticion, name='crear_tipoPeticion'),
+    path('tipoPeticion/editar/<int:idTipoPeticion>', views.editar_tipoPeticion, name='editar_tipoPeticion'),
+    path('tipoPeticion/borrar/<int:idTipoPeticion>', views.borrar_tipoPeticion, name='borrar_tipoPeticion'),
+    path('peticiones/', views.peticiones, name='peticiones'),
+    path('peticion/crear', views.crear_peticion, name='crear_peticion'),
+    path('circuitos/', views.circuitos, name='circuitos'),
+    path('circuito/crear', views.crear_circuito, name='crear_circuito'),
+    path('circuito/editar/<int:idCircuito>', views.editar_circuito, name='editar_circuito'),
+    path('circuito/borrar/<int:idCircuito>', views.borrar_circuito, name='borrar_circuito'),
+    path('subCircuitos/', views.subCircuitos, name='subCircuitos'),
+    path('subCircuito/crear', views.crear_subCircuito, name='crear_subCircuito'),
+    path('subCircuito/editar/<int:idSubCircuito>', views.editar_subCircuito, name='editar_subCircuito'),
+    path('subCircuito/borrar/<int:idSubCircuito>', views.borrar_subCircuito, name='borrar_subCircuito'),
+
+]

@@ -1,0 +1,41 @@
+{% extends "core/basemenu.html" %} 
+
+{% block title %} Lista de Pais {% endblock %}
+
+{% block content %}
+{% csrf_token %}
+<div class="card">
+    <div class="card-header">
+      <a name="" id="" class="btn btn-success" href="{% url 'crear_pais' %}" role="button">Agregar nuevo pais</a>
+    </div>
+    <div class="card-body">
+      <h4 class="card-title">Paises</h4>
+      <div class="table-responsive">
+        <table class="table table-primary">
+          <thead>
+            <tr>
+              <th scope="col">Codigo</th>
+              <th scope="col">Nombre</th>
+              <th scope="col">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for pais in paises %}
+            <tr class="">
+              <td scope="row">{{ pais.idPais }}</td>
+              <td>{{ pais.nombre }}</td>
+              <td> 
+                <a name="" id="" class="btn btn-info" href="{% url 'editar_pais' pais.idPais %}" role="button">Editar</a>
+                <a name="" id="" class="btn btn-danger" href="{% url 'borrar_pais' pais.idPais %}" role="button">Borrar</a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="card-footer text-muted">
+    </div>
+  </div>
+
+{% endblock %}

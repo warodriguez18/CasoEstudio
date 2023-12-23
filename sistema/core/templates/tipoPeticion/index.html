@@ -1,0 +1,41 @@
+{% extends "core/basemenu.html" %} 
+
+{% block title %} Lista de Pais {% endblock %}
+
+{% block content %}
+{% csrf_token %}
+<div class="card">
+    <div class="card-header">
+      <a name="" id="" class="btn btn-success" href="{% url 'crear_tipoPeticion' %}" role="button">Agregar nuevo tipo de peticion</a>
+    </div>
+    <div class="card-body">
+      <h4 class="card-title">Tipo de peticiones</h4>
+      <div class="table-responsive">
+        <table class="table table-primary">
+          <thead>
+            <tr>
+              <th scope="col">Codigo</th>
+              <th scope="col">Nombre</th>
+              <th scope="col">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for tipoPeticion in tipoPeticiones %}
+            <tr class="">
+              <td scope="row">{{ tipoPeticion.idTipoPeticion }}</td>
+              <td>{{ tipoPeticion.nombre }}</td>
+              <td> 
+                <a name="" id="" class="btn btn-info" href="{% url 'editar_tipoPeticion' tipoPeticion.idTipoPeticion %}" role="button">Editar</a>
+                <a name="" id="" class="btn btn-danger" href="{% url 'borrar_tipoPeticion' tipoPeticion.idTipoPeticion %}" role="button">Borrar</a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="card-footer text-muted">
+    </div>
+  </div>
+
+{% endblock %}

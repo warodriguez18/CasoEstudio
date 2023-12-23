@@ -1,0 +1,20 @@
+{% extends "core/basemenu.html" %} 
+
+{% block title %} Crear de Distrito {% endblock %}
+
+{% block content %}
+{% csrf_token %}
+
+    <div class="card">
+        <div class="card-header">
+            Crear distrito
+        </div>
+        <div class="card-body">
+            <h4 class="card-title">Datos del distrito</h4>
+            {% include "distrito/form.html" %}
+        </div>
+        <div class="card-footer text-muted">
+        </div>
+    </div>
+
+{% endblock %}

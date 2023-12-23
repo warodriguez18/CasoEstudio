@@ -1,0 +1,20 @@
+{% extends "core/basemenu.html" %} 
+
+{% block title %} Lista de tipo de peticion {% endblock %}
+
+{% block content %}
+{% csrf_token %}
+
+    <div class="card">
+        <div class="card-header">
+            Editar tipo de peticion
+        </div>
+        <div class="card-body">
+            <h4 class="card-title">Datos del tipo de peticion</h4>
+            {% include "tipoPeticion/form.html" %}
+        </div>
+        <div class="card-footer text-muted">
+        </div>
+    </div>
+
+{% endblock %}
