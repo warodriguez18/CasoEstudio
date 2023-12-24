@@ -1,0 +1,45 @@
+{% extends "core/basemenu.html" %} 
+
+{% block title %} Lista de despacho combustible {% endblock %}
+
+{% block content %}
+{% csrf_token %}
+<div class="card">
+    <div class="card-header">
+      <a name="" id="" class="btn btn-success" href="{% url 'crear_despachoCombustible' %}" role="button">NUEVO REGISTRO</a>
+    </div>
+    <div class="card-body">
+      <h4 class="card-title">DESPACHO DE COMBUSTIBLE</h4>
+      <div class="table-responsive">
+        <table class="table table-primary">
+          <thead>
+            <tr>
+              <th scope="col">Código</th>
+              <th scope="col">Orden de Combustible</th>
+              <th scope="col">Fecha de Despacho</th>
+              <th scope="col">Galones</th>
+              <th scope="col">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for despachoCombustible in despachoCombustibles %}
+            <tr class="">
+              <td scope="row">{{ despachoCombustible.idDespachoCombustible }}</td>
+              <td>{{ despachoCombustible.idOrdenCombustible }}</td>
+              <td>{{ despachoCombustible.fechaOrden }}</td>
+              <td>{{ despachoCombustible.galones }}</td>
+              <td> 
+                <a name="" id="" class="btn btn-info" href="{% url 'editar_despachoCombustible' despachoCombustible.idDespachoCombustible %}" role="button">Editar</a>
+                <a name="" id="" class="btn btn-danger" href="{% url 'borrar_despachoCombustible' despachoCombustible.idDespachoCombustible %}" role="button">Borrar</a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="card-footer text-muted">
+    </div>
+  </div>
+
+{% endblock %}

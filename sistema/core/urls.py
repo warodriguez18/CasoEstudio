@@ -45,4 +45,8 @@ urlpatterns = [
     path('ordenCombustible/crear', views.crear_ordenCombustible, name='crear_ordenCombustible'),
     path('ordenCombustible/editar/<int:idOrdenCombustible>', views.editar_ordenCombustible, name='editar_ordenCombustible'),
     path('ordenCombustible/borrar/<int:idOrdenCombustible>', views.borrar_ordenCombustible, name='borrar_ordenCombustible'),
+    path('despachoCombustibles/', views.despachoCombustibles, name='despachoCombustibles'),
+    path('despachoCombustible/crear', views.crear_despachoCombustible, name='crear_despachoCombustible'),
+    path('despachoCombustible/editar/<int:idDespachoCombustible>', views.editar_despachoCombustible, name='editar_despachoCombustible'),
+    path('despachoCombustible/borrar/<int:idDespachoCombustible>', views.borrar_despachoCombustible, name='borrar_despachoCombustible'),
 ]

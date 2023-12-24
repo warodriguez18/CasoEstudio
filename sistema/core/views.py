@@ -560,3 +560,55 @@ def borrar_ordenCombustible(request, idOrdenCombustible):
     tipoPeticion.usuario_modificacion = request.user.username
     tipoPeticion.save()
     return redirect('ordenCombustibles')
+
+#####################################################################################################################
+@login_required
+def despachoCombustibles(request):
+    despachoCombustibles = DespachoCombustible.objects.filter(estado=True)
+    return render(request, 'despachoCombustible/index.html', {'despachoCombustibles': despachoCombustibles})
+
+@login_required
+def crear_despachoCombustible(request):
+    if request.method == 'GET':
+        return render(request, 'despachoCombustible/crear.html', {'formulario': DespachoCombustibleForm})
+    else:
+        try:
+            formulario = DespachoCombustibleForm(request.POST or None)
+            if formulario.is_valid():
+                new_formulario = formulario.save(commit=False)
+                new_formulario.usuario_creacion = request.user.username
+                formulario.save()
+                return redirect('despachoCombustibles')
+            else:
+                return render(request, 'despachoCombustible/crear.html', {'formulario': formulario})
+        except ValueError:
+            return render(request, 'despachoCombustible/crear.html', 
+                          {'formulario': DespachoCombustibleForm, 'error': 'Se han pasado datos incorrectos. Inténtalo de nuevo.'})
+
+@login_required
+def editar_despachoCombustible(request, idDespachoCombustible):
+    despachoCombustible = get_object_or_404(DespachoCombustible, pk=idDespachoCombustible)
+    if request.method == 'GET':
+        formulario = DespachoCombustibleForm(instance=despachoCombustible)
+        return render(request, 'despachoCombustible/editar.html', {'formulario': formulario})
+    else:
+        try:
+            formulario = DespachoCombustibleForm(request.POST or None, instance=despachoCombustible)
+            if formulario.is_valid():
+                new_formulario = formulario.save(commit=False)
+                new_formulario.usuario_modificacion = request.user.username
+                formulario.save()
+                return redirect('despachoCombustibles')
+            else:
+                return render(request, 'despachoCombustible/editar.html', {'formulario': formulario})
+        except ValueError:
+            return render(request, 'despachoCombustible/editar.html', 
+                          {'formulario': DespachoCombustibleForm, 'error': 'Se han pasado datos incorrectos. Inténtalo de nuevo.'})
+
+@login_required
+def borrar_despachoCombustible(request, idDespachoCombustible):
+    tipoPeticion = get_object_or_404(DespachoCombustible, pk=idDespachoCombustible)
+    tipoPeticion.estado = False
+    tipoPeticion.usuario_modificacion = request.user.username
+    tipoPeticion.save()
+    return redirect('despachoCombustibles')

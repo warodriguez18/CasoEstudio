@@ -174,4 +174,26 @@ class OrdenCombustibleForm(forms.ModelForm):
         self.fields['idVehiculo'].queryset = Vehiculo.objects.all().filter(estado = True)
         self.fields['idTipoCombustible'].queryset = TipoCombustible.objects.all().filter(estado = True)
        
-        
+
+class DespachoCombustibleForm(forms.ModelForm):
+    
+    class Meta:
+        model = DespachoCombustible
+        fields = ['idOrdenCombustible', 'fechaOrden', 'galones',]
+        widgets = { 'idOrdenCombustible': 
+            forms.Select(
+            attrs={
+                "class": "form-control chosen-select",
+                "data-placeholder": "Selecciona una orden de combustible",
+                "style": "width: 100%;",
+            }
+        ),
+        'fechaOrden': forms.DateInput(format=('%Y-%m-%dT%H:%M'), 
+                                          attrs={'class': 'form-control', 'type': 'datetime-local'},
+        ), 
+        }
+    
+     
+    def __init__(self, *args, **kwargs):
+        super(DespachoCombustibleForm, self).__init__(*args, **kwargs)
+        self.fields['idOrdenCombustible'].queryset = OrdenCombustible.objects.all().filter(estado = True)
