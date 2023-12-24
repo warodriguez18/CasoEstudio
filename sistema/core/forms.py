@@ -1,6 +1,6 @@
 from django import forms
 from django.urls import reverse_lazy
-from .models import Pais, Provincia, Canton, Distrito, TipoPeticion, Peticion, Circuito, SubCiruito
+from .models import *
 from smart_selects.form_fields import ChainedModelChoiceField
 
 class PaisForm(forms.ModelForm):
@@ -26,12 +26,38 @@ class DistritoForm(forms.ModelForm):
 class CircuitoForm(forms.ModelForm):
     class Meta:
         model = Circuito
-        fields = ['numCircuito', 'codigo', 'nombre',]
+        fields = ['idDistrito', 'numCircuito', 'codigo', 'nombre',]
+        widgets = { 'idDistrito': 
+            forms.Select(
+            attrs={
+                "class": "form-control chosen-select",
+                "data-placeholder": "Selecciona un Distrito",
+                "style": "width: 100%;",
+            }
+        )}
+    
+    def __init__(self, *args, **kwargs):
+        super(CircuitoForm, self).__init__(*args, **kwargs)
+        self.fields['idDistrito'].queryset = Distrito.objects.all().filter(estado = True)
 
 class SubCircuitoForm(forms.ModelForm):
+    
     class Meta:
         model = SubCiruito
-        fields = ['numSubCircuito', 'codigo', 'nombre',]
+        fields = ['idCircuito', 'numSubCircuito', 'codigo', 'nombre',]
+        widgets = { 'idCircuito': 
+            forms.Select(
+            attrs={
+                "class": "form-control chosen-select",
+                "data-placeholder": "Selecciona un Circuito",
+                "style": "width: 100%;",
+            }
+        )}
+    
+    def __init__(self, *args, **kwargs):
+        super(SubCircuitoForm, self).__init__(*args, **kwargs)
+        self.fields['idCircuito'].queryset = Circuito.objects.all().filter(estado = True)
+        
 
 class TipoPeticionForm(forms.ModelForm):
     class Meta:
@@ -79,3 +105,73 @@ class PeticionForm(forms.ModelForm):
                 "style": "width: 50%;",
             }
         )}
+
+class TipoCombustibleForm(forms.ModelForm):
+    class Meta:
+        model = TipoCombustible
+        fields = ['nombre',]
+
+class GasolineraForm(forms.ModelForm):
+    class Meta:
+        model = Gasolinera
+        fields = ['nombre', 'direccion',]
+
+class OrdenCombustibleForm(forms.ModelForm):
+    class Meta:
+        model = OrdenCombustible
+        fields = ['idGasolinera', 
+                'idPersonal',
+                'idVehiculo',
+                'idTipoCombustible',
+                'galones',
+                'kilometrajeSalida',
+                'horaSalida',
+                'horaLlegada',]
+        
+        widgets = { 'idGasolinera': 
+            forms.Select(
+            attrs={
+                "class": "form-control chosen-select",
+                "data-placeholder": "Selecciona un Gasolinera",
+                "style": "width: 100%;",
+            }
+        ),
+        'idPersonal': 
+            forms.Select(
+            attrs={
+                "class": "form-control chosen-select",
+                "data-placeholder": "Selecciona un Personal",
+                "style": "width: 100%;",
+            }
+        ),
+        'idVehiculo': 
+            forms.Select(
+            attrs={
+                "class": "form-control chosen-select",
+                "data-placeholder": "Selecciona un Vehiculo",
+                "style": "width: 100%;",
+            }
+        ),
+        'idTipoCombustible': 
+            forms.Select(
+            attrs={
+                "class": "form-control chosen-select",
+                "placeholder": "Selecciona un Tipo de Combustible",
+            }
+        ),
+        "horaSalida": forms.TimeInput(format='%H:%M',
+                                      attrs={'class': 'form-control', 
+                                             'type': 'time',}),
+        "horaLlegada": forms.TimeInput(format='%H:%M',
+                                      attrs={'class': 'form-control', 
+                                             'type': 'time',}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(OrdenCombustibleForm, self).__init__(*args, **kwargs)
+        self.fields['idGasolinera'].queryset = Gasolinera.objects.all().filter(estado = True)
+        self.fields['idPersonal'].queryset = Personal.objects.all().filter(estado = True)
+        self.fields['idVehiculo'].queryset = Vehiculo.objects.all().filter(estado = True)
+        self.fields['idTipoCombustible'].queryset = TipoCombustible.objects.all().filter(estado = True)
+       
+        

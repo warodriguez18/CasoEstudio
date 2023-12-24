@@ -233,7 +233,7 @@ class Vehiculo(Auditoria):
     estado = models.BooleanField(blank=False, default=True, verbose_name='Estado de Vehiculo', editable=False)
     
     def __str__(self):
-        return self.placa
+        return self.idMarca.nombre + ': ' + self.idTipoVehiculo.nombre + ': ' + self.placa
     
     class Meta:
         db_table = 'vehiculo'
@@ -395,3 +395,71 @@ class Peticion(Auditoria):
         ordering = ['detalle']
         verbose_name = 'Peticion'
         verbose_name_plural = 'Peticiones'
+
+class TipoCombustible(Auditoria):
+    idTipoCombustible= models.BigAutoField(auto_created=True, primary_key=True, unique=True)
+    nombre = models.CharField(blank=False, max_length=200, verbose_name='Nombre')
+    estado = models.BooleanField(blank=False, default=True, verbose_name='Estado de Tipo Combustible', editable=False)
+
+    def __str__(self):
+        return self.nombre
+
+    class Meta: 
+        db_table = 'tipoCombustible'
+        ordering = ['nombre']
+        verbose_name = 'Tipo de Combustible'
+        verbose_name_plural = 'Tipos de Combustible'
+
+class Gasolinera(Auditoria):
+    idGasolinera= models.BigAutoField(auto_created=True, primary_key=True, unique=True)
+    nombre = models.CharField(blank=False, max_length=200, verbose_name='Nombre')
+    direccion = models.CharField(blank=False, max_length=400, verbose_name='Dirección')
+    estado = models.BooleanField(blank=False, default=True, verbose_name='Estado de Gasolinera', editable=False)
+
+    def __str__(self):
+        return self.nombre
+
+    class Meta: 
+        db_table = 'gasolinera'
+        ordering = ['nombre']
+        verbose_name = 'Gasolinera'
+        verbose_name_plural = 'Gasolineras'
+
+
+class OrdenCombustible(Auditoria):
+    idOrdenCombustible = models.BigAutoField(auto_created=True, primary_key=True, unique=True)
+    idGasolinera = models.ForeignKey(Gasolinera, on_delete=models.CASCADE, verbose_name='Gasolinera')
+    idPersonal = models.ForeignKey(Personal, on_delete=models.CASCADE, verbose_name='Personal')
+    idVehiculo = models.ForeignKey(Vehiculo, on_delete=models.CASCADE, verbose_name='Vehículo')
+    idTipoCombustible = models.ForeignKey(TipoCombustible, on_delete=models.CASCADE, verbose_name='Tipo de Combustible')
+    fechaSolicitud = models.DateField(auto_now_add=True, blank=False, verbose_name='Fecha de Solicitud')
+    galones = models.DecimalField(blank=False, max_digits=10, decimal_places=2, verbose_name='Galones')
+    kilometrajeSalida = models.DecimalField(blank=False, max_digits=10, decimal_places=2, verbose_name='Kilometraje de Salida')
+    horaSalida = models.TimeField(blank=False, verbose_name='Hora de Salida')
+    horaLlegada = models.TimeField(blank=False, verbose_name='Hora de Llegada')
+    estado = models.BooleanField(blank=False, default=True, verbose_name='Estado de Orden de Combustible', editable=False)
+
+    def __str__(self):
+        return self.fechaSolicitud
+
+    class Meta: 
+        db_table = 'ordenCombustible'
+        ordering = ['fechaSolicitud']
+        verbose_name = 'Orden de Combustible'
+        verbose_name_plural = 'Ordenes de Combustible'
+
+class DespachoCombustible(Auditoria):
+    idDespachoCombustible = models.BigAutoField(auto_created=True, primary_key=True, unique=True)
+    idOrdenCombustible = models.ForeignKey(OrdenCombustible, on_delete=models.CASCADE, verbose_name='Ordne de Combustible')
+    fechaOrden = models.DateTimeField(blank=False, verbose_name='Fecha de Despacho')
+    galones = models.DecimalField(blank=False, max_digits=10, decimal_places=2, verbose_name='Galones')
+    estado = models.BooleanField(blank=False, default=True, verbose_name='Estado de Despacho de Combustible', editable=False)
+
+    def __str__(self):
+        return self.fechaOrden
+
+    class Meta: 
+        db_table = 'despachoCombustible'
+        ordering = ['fechaOrden']
+        verbose_name = 'Despacho de Combustible'
+        verbose_name_plural = 'Despachos de Combustible'

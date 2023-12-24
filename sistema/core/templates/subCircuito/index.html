@@ -6,10 +6,10 @@
 {% csrf_token %}
 <div class="card">
     <div class="card-header">
-      <a name="" id="" class="btn btn-success" href="{% url 'crear_subCircuito' %}" role="button">Agregar nuevo subCircuito</a>
+      <a name="" id="" class="btn btn-success" href="{% url 'crear_subCircuito' %}" role="button">NUEVO REGISTRO</a>
     </div>
     <div class="card-body">
-      <h4 class="card-title">SubCircuitos</h4>
+      <h4 class="card-title">SUBCIRCUITOS</h4>
       <div class="table-responsive">
         <table class="table table-primary">
           <thead>
@@ -23,12 +23,12 @@
           <tbody>
             {% for subCircuito in subCircuitos %}
             <tr class="">
-              <td scope="row">{{ subCircuito.idSubCircuito }}</td>
+              <td scope="row">{{ subCircuito.idSubCiruito }}</td>
               <td>{{ subCircuito.codigo }}</td>
               <td>{{ subCircuito.nombre }}</td>
               <td> 
-                <a name="" id="" class="btn btn-info" href="{% url 'editar_subCircuito' subCircuito.idSubCircuito %}" role="button">Editar</a>
-                <a name="" id="" class="btn btn-danger" href="{% url 'borrar_subCircuito' subCircuito.idSubCircuito %}" role="button">Borrar</a>
+                <a name="" id="" class="btn btn-info" href="{% url 'editar_subCircuito' subCircuito.idSubCiruito %}" role="button">Editar</a>
+                <a name="" id="" class="btn btn-danger" href="{% url 'borrar_subCircuito' subCircuito.idSubCiruito %}" role="button">Borrar</a>
               </td>
             </tr>
             {% endfor %}
