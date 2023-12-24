@@ -3,14 +3,18 @@
   {% for item in formulario %}
     <div class="mb-3">
       <label for="" class="form-label">{{ item.label }}:</label>
-      <input type ="{{ item.field.widget.input_type }}"
-        class="form-control" 
-        name="{{ item.name }}" 
-        id="" 
-        aria-describedby="helpId" 
-        placeholder="{{ item.label }}"
-        value="{{ item.value | default:'' }}"
-        >
+      {% if item.label == 'Circuito' %}
+        {{item}}
+      {% else %}
+        <input type ="{{ item.field.widget.input_type }}"
+          class="form-control" 
+          name="{{ item.name }}" 
+          id="" 
+          aria-describedby="helpId" 
+          placeholder="{{ item.label }}"
+          value="{{ item.value | default:'' }}"
+          >
+      {% endif %}  
     </div>
     <div class="col-12 help-"> {{ item.errors }} </div>
   {% endfor %}

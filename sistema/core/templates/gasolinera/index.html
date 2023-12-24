@@ -1,0 +1,41 @@
+{% extends "core/basemenu.html" %} 
+
+{% block title %} Lista de gasolinera {% endblock %}
+
+{% block content %}
+{% csrf_token %}
+<div class="card">
+    <div class="card-header">
+      <a name="" id="" class="btn btn-success" href="{% url 'crear_gasolinera' %}" role="button">NUEVO REGISTRO</a>
+    </div>
+    <div class="card-body">
+      <h4 class="card-title">TIPO DE GASOLINERA</h4>
+      <div class="table-responsive">
+        <table class="table table-primary">
+          <thead>
+            <tr>
+              <th scope="col">Código</th>
+              <th scope="col">Nombre</th>
+              <th scope="col">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for gasolinera in gasolineras %}
+            <tr class="">
+              <td scope="row">{{ gasolinera.idGasolinera }}</td>
+              <td>{{ gasolinera.nombre }}</td>
+              <td> 
+                <a name="" id="" class="btn btn-info" href="{% url 'editar_gasolinera' gasolinera.idGasolinera %}" role="button">Editar</a>
+                <a name="" id="" class="btn btn-danger" href="{% url 'borrar_gasolinera' gasolinera.idGasolinera %}" role="button">Borrar</a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="card-footer text-muted">
+    </div>
+  </div>
+
+{% endblock %}

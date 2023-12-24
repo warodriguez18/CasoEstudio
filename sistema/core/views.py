@@ -5,8 +5,8 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.contrib.auth.decorators import login_required
-from .models import Pais, Provincia, Distrito, TipoPeticion, Peticion, SubCiruito, Circuito
-from .forms import PaisForm, ProvinciaForm, DistritoForm, TipoPeticionForm, PeticionForm, CircuitoForm, SubCircuitoForm
+from .models import *
+from .forms import *
 
 """Session"""
 def signup(request):
@@ -75,7 +75,7 @@ def crear_pais(request):
                 return render(request, 'pais/crear.html', {'formulario': formulario})
         except ValueError:
             return render(request, 'pais/crear.html', 
-                          {'formulario': formulario, 'error': 'Se han pasado datos incorrectos. Inténtalo de nuevo.'})
+                          {'formulario': PaisForm, 'error': 'Se han pasado datos incorrectos. Inténtalo de nuevo.'})
 
 @login_required
 def editar_pais(request, idPais):
@@ -95,7 +95,7 @@ def editar_pais(request, idPais):
                 return render(request, 'pais/editar.html', {'formulario': formulario})
         except ValueError:
             return render(request, 'pais/editar.html', 
-                          {'formulario': formulario, 'error': 'Se han pasado datos incorrectos. Inténtalo de nuevo.'})
+                          {'formulario': PaisForm, 'error': 'Se han pasado datos incorrectos. Inténtalo de nuevo.'})
 
 @login_required
 def borrar_pais(request, idPais):
@@ -105,7 +105,7 @@ def borrar_pais(request, idPais):
     pais.save()
     return redirect('paises')
 
-
+################################################################################################################
 @login_required
 def provincias(request):
     provincias = Provincia.objects.filter(estado=True)
@@ -128,7 +128,7 @@ def crear_provincia(request):
                 return render(request, 'provincia/crear.html', {'formulario': formulario})
         except ValueError:
             return render(request, 'provincia/crear.html', 
-                          {'formulario': formulario, 'error': 'Se han pasado datos incorrectos. Inténtalo de nuevo.'})
+                          {'formulario': ProvinciaForm, 'error': 'Se han pasado datos incorrectos. Inténtalo de nuevo.'})
 
 @login_required
 def editar_provincia(request, idProvincia):
@@ -148,7 +148,7 @@ def editar_provincia(request, idProvincia):
                 return render(request, 'provincia/editar.html', {'formulario': formulario})
         except ValueError:
             return render(request, 'provincia/editar.html', 
-                          {'formulario': formulario, 'error': 'Se han pasado datos incorrectos. Inténtalo de nuevo.'})
+                          {'formulario': ProvinciaForm, 'error': 'Se han pasado datos incorrectos. Inténtalo de nuevo.'})
 
 @login_required
 def borrar_provincia(request, idProvincia):
@@ -159,7 +159,7 @@ def borrar_provincia(request, idProvincia):
     return redirect('provincias')
 
 
-
+###############################################################################################################
 @login_required
 def distritos(request):
     distritos = Distrito.objects.filter(estado=True)
@@ -181,7 +181,7 @@ def crear_distrito(request):
                 return render(request, 'distrito/crear.html', {'formulario': formulario})
         except ValueError:
             return render(request, 'distrito/crear.html', 
-                          {'formulario': formulario, 'error': 'Se han pasado datos incorrectos. Inténtalo de nuevo.'})
+                          {'formulario': DistritoForm, 'error': 'Se han pasado datos incorrectos. Inténtalo de nuevo.'})
 
 @login_required
 def editar_distrito(request, idDistrito):
@@ -201,7 +201,7 @@ def editar_distrito(request, idDistrito):
                 return render(request, 'distrito/editar.html', {'formulario': formulario})
         except ValueError:
             return render(request, 'distrito/editar.html', 
-                          {'formulario': formulario, 'error': 'Se han pasado datos incorrectos. Inténtalo de nuevo.'})
+                          {'formulario': DistritoForm, 'error': 'Se han pasado datos incorrectos. Inténtalo de nuevo.'})
 
 @login_required
 def borrar_distrito(request, idDistrito):
@@ -212,6 +212,7 @@ def borrar_distrito(request, idDistrito):
     distrito.save()
     return redirect('distritos')
 
+###############################################################################################################
 @login_required
 def tipoPeticiones(request):
     tipoPeticiones = TipoPeticion.objects.filter(estado=True)
@@ -233,7 +234,7 @@ def crear_tipoPeticion(request):
                 return render(request, 'tipoPeticion/crear.html', {'formulario': formulario})
         except ValueError:
             return render(request, 'tipoPeticion/crear.html', 
-                          {'formulario': formulario, 'error': 'Se han pasado datos incorrectos. Inténtalo de nuevo.'})
+                          {'formulario': TipoPeticionForm, 'error': 'Se han pasado datos incorrectos. Inténtalo de nuevo.'})
 
 @login_required
 def editar_tipoPeticion(request, idTipoPeticion):
@@ -253,7 +254,7 @@ def editar_tipoPeticion(request, idTipoPeticion):
                 return render(request, 'tipoPeticion/editar.html', {'formulario': formulario})
         except ValueError:
             return render(request, 'tipoPeticion/editar.html', 
-                          {'formulario': formulario, 'error': 'Se han pasado datos incorrectos. Inténtalo de nuevo.'})
+                          {'formulario': TipoPeticionForm, 'error': 'Se han pasado datos incorrectos. Inténtalo de nuevo.'})
 
 @login_required
 def borrar_tipoPeticion(request, idTipoPeticion):
@@ -264,7 +265,7 @@ def borrar_tipoPeticion(request, idTipoPeticion):
     tipoPeticion.save()
     return redirect('tipoPeticiones')
 
-
+###########################################################################################################
 @login_required
 def peticiones(request):
     peticiones = Peticion.objects.filter(estado=True)
@@ -286,7 +287,7 @@ def crear_peticion(request):
                 return render(request, 'peticion/crear.html', {'formulario': formulario})
         except ValueError:
             return render(request, 'peticion/crear.html', 
-                          {'formulario': formulario, 'error': 'Se han pasado datos incorrectos. Inténtalo de nuevo.'})
+                          {'formulario': PeticionForm, 'error': 'Se han pasado datos incorrectos. Inténtalo de nuevo.'})
 
 
 def autocomplete_subcircuito(request):
@@ -297,7 +298,7 @@ def autocomplete_subcircuito(request):
     ]}
     return JsonResponse(data)
 
-
+#############################################################################################################
 @login_required
 def circuitos(request):
     circuitos = Circuito.objects.filter(estado=True)
@@ -319,7 +320,7 @@ def crear_circuito(request):
                 return render(request, 'circuito/crear.html', {'formulario': formulario})
         except ValueError:
             return render(request, 'circuito/crear.html', 
-                          {'formulario': formulario, 'error': 'Se han pasado datos incorrectos. Inténtalo de nuevo.'})
+                          {'formulario': CircuitoForm, 'error': 'Se han pasado datos incorrectos. Inténtalo de nuevo.'})
 
 @login_required
 def editar_circuito(request, idCircuito):
@@ -339,7 +340,7 @@ def editar_circuito(request, idCircuito):
                 return render(request, 'circuito/editar.html', {'formulario': formulario})
         except ValueError:
             return render(request, 'circuito/editar.html', 
-                          {'formulario': formulario, 'error': 'Se han pasado datos incorrectos. Inténtalo de nuevo.'})
+                          {'formulario': CircuitoForm, 'error': 'Se han pasado datos incorrectos. Inténtalo de nuevo.'})
 
 @login_required
 def borrar_circuito(request, idCircuito):
@@ -350,7 +351,7 @@ def borrar_circuito(request, idCircuito):
     circuito.save()
     return redirect('circuitos')
 
-#################################################################################################################3333
+#################################################################################################################
 @login_required
 def subCircuitos(request):
     subCircuitos = SubCiruito.objects.filter(estado=True)
@@ -372,13 +373,13 @@ def crear_subCircuito(request):
                 return render(request, 'subCircuito/crear.html', {'formulario': formulario})
         except ValueError:
             return render(request, 'subCircuito/crear.html', 
-                          {'formulario': formulario, 'error': 'Se han pasado datos incorrectos. Inténtalo de nuevo.'})
+                          {'formulario': SubCircuitoForm, 'error': 'Se han pasado datos incorrectos. Inténtalo de nuevo.'})
 
 @login_required
-def editar_subCircuito(request, idSubCircuito):
-    subCircuito = get_object_or_404(SubCiruito, pk=idSubCircuito)
+def editar_subCircuito(request, idSubCiruito):
+    subCircuito = get_object_or_404(SubCiruito, pk=idSubCiruito)
     if request.method == 'GET':
-        formulario = CircuitoForm(instance=subCircuito)
+        formulario = SubCiruito(instance=subCircuito)
         return render(request, 'subCircuito/editar.html', {'formulario': formulario})
     else:
         try:
@@ -392,13 +393,170 @@ def editar_subCircuito(request, idSubCircuito):
                 return render(request, 'subCircuito/editar.html', {'formulario': formulario})
         except ValueError:
             return render(request, 'subCircuito/editar.html', 
-                          {'formulario': formulario, 'error': 'Se han pasado datos incorrectos. Inténtalo de nuevo.'})
+                          {'formulario': SubCircuitoForm, 'error': 'Se han pasado datos incorrectos. Inténtalo de nuevo.'})
 
 @login_required
-def borrar_subCircuito(request, idSubCircuito):
-    print('subCircuito', idSubCircuito)
-    subCircuito = get_object_or_404(SubCiruito, pk=idSubCircuito)
+def borrar_subCircuito(request, idSubCiruito):
+    subCircuito = get_object_or_404(SubCiruito, pk=idSubCiruito)
     subCircuito.estado = False
     subCircuito.usuario_modificacion = request.user.username
     subCircuito.save()
     return redirect('subCircuitos')
+
+#####################################################################################################################
+
+@login_required
+def tipoCombustibles(request):
+    tipoCombustibles = TipoCombustible.objects.filter(estado=True)
+    return render(request, 'tipoCombustible/index.html', {'tipoCombustibles': tipoCombustibles})
+
+@login_required
+def crear_tipoCombustible(request):
+    if request.method == 'GET':
+        return render(request, 'tipoCombustible/crear.html', {'formulario': TipoCombustibleForm})
+    else:
+        try:
+            formulario = TipoCombustibleForm(request.POST or None)
+            if formulario.is_valid():
+                new_formulario = formulario.save(commit=False)
+                new_formulario.usuario_creacion = request.user.username
+                formulario.save()
+                return redirect('tipoCombustibles')
+            else:
+                return render(request, 'tipoCombustible/crear.html', {'formulario': formulario})
+        except ValueError:
+            return render(request, 'tipoCombustible/crear.html', 
+                          {'formulario': TipoCombustibleForm, 'error': 'Se han pasado datos incorrectos. Inténtalo de nuevo.'})
+
+@login_required
+def editar_tipoCombustible(request, idTipoCombustible):
+    tipoCombustible = get_object_or_404(TipoCombustible, pk=idTipoCombustible)
+    if request.method == 'GET':
+        formulario = TipoCombustibleForm(instance=tipoCombustible)
+        return render(request, 'tipoCombustible/editar.html', {'formulario': formulario})
+    else:
+        try:
+            formulario = TipoCombustibleForm(request.POST or None, instance=tipoCombustible)
+            if formulario.is_valid():
+                new_formulario = formulario.save(commit=False)
+                new_formulario.usuario_modificacion = request.user.username
+                formulario.save()
+                return redirect('tipoCombustibles')
+            else:
+                return render(request, 'tipoCombustible/editar.html', {'formulario': formulario})
+        except ValueError:
+            return render(request, 'tipoCombustible/editar.html', 
+                          {'formulario': TipoCombustibleForm, 'error': 'Se han pasado datos incorrectos. Inténtalo de nuevo.'})
+
+@login_required
+def borrar_tipoCombustible(request, idTipoCombustible):
+    tipoPeticion = get_object_or_404(TipoCombustible, pk=idTipoCombustible)
+    tipoPeticion.estado = False
+    tipoPeticion.usuario_modificacion = request.user.username
+    tipoPeticion.save()
+    return redirect('tipoCombustibles')
+
+#####################################################################################################################
+@login_required
+def gasolineras(request):
+    gasolineras = Gasolinera.objects.filter(estado=True)
+    return render(request, 'gasolinera/index.html', {'gasolineras': gasolineras})
+
+@login_required
+def crear_gasolinera(request):
+    if request.method == 'GET':
+        return render(request, 'gasolinera/crear.html', {'formulario': GasolineraForm})
+    else:
+        try:
+            formulario = GasolineraForm(request.POST or None)
+            if formulario.is_valid():
+                new_formulario = formulario.save(commit=False)
+                new_formulario.usuario_creacion = request.user.username
+                formulario.save()
+                return redirect('gasolineras')
+            else:
+                return render(request, 'gasolinera/crear.html', {'formulario': formulario})
+        except ValueError:
+            return render(request, 'gasolinera/crear.html', 
+                          {'formulario': GasolineraForm, 'error': 'Se han pasado datos incorrectos. Inténtalo de nuevo.'})
+
+@login_required
+def editar_gasolinera(request, idGasolinera):
+    gasolinera = get_object_or_404(Gasolinera, pk=idGasolinera)
+    if request.method == 'GET':
+        formulario = GasolineraForm(instance=gasolinera)
+        return render(request, 'gasolinera/editar.html', {'formulario': formulario})
+    else:
+        try:
+            formulario = GasolineraForm(request.POST or None, instance=gasolinera)
+            if formulario.is_valid():
+                new_formulario = formulario.save(commit=False)
+                new_formulario.usuario_modificacion = request.user.username
+                formulario.save()
+                return redirect('gasolineras')
+            else:
+                return render(request, 'gasolinera/editar.html', {'formulario': formulario})
+        except ValueError:
+            return render(request, 'gasolinera/editar.html', 
+                          {'formulario': GasolineraForm, 'error': 'Se han pasado datos incorrectos. Inténtalo de nuevo.'})
+
+@login_required
+def borrar_gasolinera(request, idGasolinera):
+    tipoPeticion = get_object_or_404(Gasolinera, pk=idGasolinera)
+    tipoPeticion.estado = False
+    tipoPeticion.usuario_modificacion = request.user.username
+    tipoPeticion.save()
+    return redirect('gasolineras')
+
+
+#####################################################################################################################
+@login_required
+def ordenCombustibles(request):
+    ordenCombustibles = OrdenCombustible.objects.filter(estado=True)
+    return render(request, 'ordenCombustible/index.html', {'ordenCombustibles': ordenCombustibles})
+
+@login_required
+def crear_ordenCombustible(request):
+    if request.method == 'GET':
+        return render(request, 'ordenCombustible/crear.html', {'formulario': OrdenCombustibleForm})
+    else:
+        try:
+            formulario = OrdenCombustibleForm(request.POST or None)
+            if formulario.is_valid():
+                new_formulario = formulario.save(commit=False)
+                new_formulario.usuario_creacion = request.user.username
+                formulario.save()
+                return redirect('ordenCombustibles')
+            else:
+                return render(request, 'ordenCombustible/crear.html', {'formulario': formulario})
+        except ValueError:
+            return render(request, 'ordenCombustible/crear.html', 
+                          {'formulario': OrdenCombustibleForm, 'error': 'Se han pasado datos incorrectos. Inténtalo de nuevo.'})
+
+@login_required
+def editar_ordenCombustible(request, idOrdenCombustible):
+    ordenCombustible = get_object_or_404(OrdenCombustible, pk=idOrdenCombustible)
+    if request.method == 'GET':
+        formulario = OrdenCombustibleForm(instance=ordenCombustible)
+        return render(request, 'ordenCombustible/editar.html', {'formulario': formulario})
+    else:
+        try:
+            formulario = OrdenCombustibleForm(request.POST or None, instance=ordenCombustible)
+            if formulario.is_valid():
+                new_formulario = formulario.save(commit=False)
+                new_formulario.usuario_modificacion = request.user.username
+                formulario.save()
+                return redirect('ordenCombustibles')
+            else:
+                return render(request, 'ordenCombustible/editar.html', {'formulario': formulario})
+        except ValueError:
+            return render(request, 'ordenCombustible/editar.html', 
+                          {'formulario': OrdenCombustibleForm, 'error': 'Se han pasado datos incorrectos. Inténtalo de nuevo.'})
+
+@login_required
+def borrar_ordenCombustible(request, idOrdenCombustible):
+    tipoPeticion = get_object_or_404(OrdenCombustible, pk=idOrdenCombustible)
+    tipoPeticion.estado = False
+    tipoPeticion.usuario_modificacion = request.user.username
+    tipoPeticion.save()
+    return redirect('ordenCombustibles')

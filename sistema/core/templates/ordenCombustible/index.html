@@ -1,0 +1,49 @@
+{% extends "core/basemenu.html" %} 
+
+{% block title %} Lista de orden combustible {% endblock %}
+
+{% block content %}
+{% csrf_token %}
+<div class="card">
+    <div class="card-header">
+      <a name="" id="" class="btn btn-success" href="{% url 'crear_ordenCombustible' %}" role="button">NUEVO REGISTRO</a>
+    </div>
+    <div class="card-body">
+      <h4 class="card-title">ORDEN DE COMBUSTIBLE</h4>
+      <div class="table-responsive">
+        <table class="table table-primary">
+          <thead>
+            <tr>
+              <th scope="col">Código</th>
+              <th scope="col">Nombre</th>
+              <th scope="col">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for ordenCombustible in ordenCombustibles %}
+            <tr class="">
+              <td scope="row">{{ ordenCombustible.idOrdenCombustible }}</td>
+              <td>{{ ordenCombustible.idGasolinera }}</td>
+              <td>{{ ordenCombustible.idPersonal }}</td>
+              <td>{{ ordenCombustible.idVehiculo }}</td>
+              <td>{{ ordenCombustible.idTipoCombustible }}</td>
+              <td>{{ ordenCombustible.fechaSolicitud }}</td>
+              <td>{{ ordenCombustible.galones }}</td>
+              <td>{{ ordenCombustible.kilometrajeSalida }}</td>
+              <td>{{ ordenCombustible.horaSalida }}</td>
+              <td>{{ ordenCombustible.horaLlegada }}</td>
+              <td> 
+                <a name="" id="" class="btn btn-info" href="{% url 'editar_ordenCombustible' ordenCombustible.idOrdenCombustible %}" role="button">Editar</a>
+                <a name="" id="" class="btn btn-danger" href="{% url 'borrar_ordenCombustible' ordenCombustible.idOrdenCombustible %}" role="button">Borrar</a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="card-footer text-muted">
+    </div>
+  </div>
+
+{% endblock %}
