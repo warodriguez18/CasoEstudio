@@ -156,10 +156,15 @@ class OrdenCombustibleForm(forms.ModelForm):
             forms.Select(
             attrs={
                 "class": "form-control chosen-select",
-                "data-placeholder": "Selecciona un Tipo de Combustible",
-                "style": "width: 100%;",
+                "placeholder": "Selecciona un Tipo de Combustible",
             }
-        )
+        ),
+        "horaSalida": forms.TimeInput(format='%H:%M',
+                                      attrs={'class': 'form-control', 
+                                             'type': 'time',}),
+        "horaLlegada": forms.TimeInput(format='%H:%M',
+                                      attrs={'class': 'form-control', 
+                                             'type': 'time',}),
         }
 
     def __init__(self, *args, **kwargs):

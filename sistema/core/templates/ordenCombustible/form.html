@@ -3,7 +3,7 @@
   {% for item in formulario %}
     <div class="mb-3">
       <label for="" class="form-label">{{ item.label }}:</label>
-      {% if item.label == 'Gasolinera' or item.label == 'Personal' or item.label == 'Vehículo' or item.label == 'Tipo de Combustible'%}
+      {% if item.label == 'Gasolinera' or item.label == 'Personal' or item.label == 'Vehículo' or item.label == 'Tipo de Combustible' or item.label == 'Hora de Salida' %}
         {{item}}
       {% else %}
         <input type ="{{ item.field.widget.input_type }}"

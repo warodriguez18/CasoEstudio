@@ -431,12 +431,12 @@ class OrdenCombustible(Auditoria):
     idGasolinera = models.ForeignKey(Gasolinera, on_delete=models.CASCADE, verbose_name='Gasolinera')
     idPersonal = models.ForeignKey(Personal, on_delete=models.CASCADE, verbose_name='Personal')
     idVehiculo = models.ForeignKey(Vehiculo, on_delete=models.CASCADE, verbose_name='Vehículo')
-    idTipoCombustible = models.ForeignKey(TipoPeticion, on_delete=models.CASCADE, verbose_name='Tipo de Combustible')
+    idTipoCombustible = models.ForeignKey(TipoCombustible, on_delete=models.CASCADE, verbose_name='Tipo de Combustible')
     fechaSolicitud = models.DateField(auto_now_add=True, blank=False, verbose_name='Fecha de Solicitud')
     galones = models.DecimalField(blank=False, max_digits=10, decimal_places=2, verbose_name='Galones')
     kilometrajeSalida = models.DecimalField(blank=False, max_digits=10, decimal_places=2, verbose_name='Kilometraje de Salida')
     horaSalida = models.TimeField(blank=False, verbose_name='Hora de Salida')
-    horaLlegada = models.TimeField(blank=False, verbose_name='Hora de Salida')
+    horaLlegada = models.TimeField(blank=False, verbose_name='Hora de Llegada')
     estado = models.BooleanField(blank=False, default=True, verbose_name='Estado de Orden de Combustible', editable=False)
 
     def __str__(self):
