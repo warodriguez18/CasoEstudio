@@ -440,7 +440,7 @@ class OrdenCombustible(Auditoria):
     estado = models.BooleanField(blank=False, default=True, verbose_name='Estado de Orden de Combustible', editable=False)
 
     def __str__(self):
-        return self.fechaSolicitud
+        return str(self.fechaSolicitud) + ': ' + self.idGasolinera.nombre + ': ' + self.idPersonal.apellido + ': ' + self.idVehiculo.placa
 
     class Meta: 
         db_table = 'ordenCombustible'
@@ -450,13 +450,13 @@ class OrdenCombustible(Auditoria):
 
 class DespachoCombustible(Auditoria):
     idDespachoCombustible = models.BigAutoField(auto_created=True, primary_key=True, unique=True)
-    idOrdenCombustible = models.ForeignKey(OrdenCombustible, on_delete=models.CASCADE, verbose_name='Ordne de Combustible')
+    idOrdenCombustible = models.ForeignKey(OrdenCombustible, on_delete=models.CASCADE, verbose_name='Orden de Combustible')
     fechaOrden = models.DateTimeField(blank=False, verbose_name='Fecha de Despacho')
     galones = models.DecimalField(blank=False, max_digits=10, decimal_places=2, verbose_name='Galones')
     estado = models.BooleanField(blank=False, default=True, verbose_name='Estado de Despacho de Combustible', editable=False)
 
     def __str__(self):
-        return self.fechaOrden
+        return str(self.fechaOrden)
 
     class Meta: 
         db_table = 'despachoCombustible'
