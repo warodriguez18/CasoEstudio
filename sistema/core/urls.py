@@ -1,5 +1,13 @@
-from django.urls import path
+from django.urls import include, path
+from .api import *
 from . import views
+from rest_framework import routers
+
+router = routers.DefaultRouter()
+router.register('api/OrdenCombustible', OrdenCombustibleViewSet, 'OrdenCombustible')
+router.register('api/TipoCombustible', TipoCombustibleViewSet, 'TipoCombustible')
+router.register('api/Gasolinera', GasolineraViewSet, 'Gasolinera')
+router.register('api/DespachoCombustible', DespachoCombustibleViewSet, 'DespachoCombustible')
 
 urlpatterns = [
     path('', views.home, name='home'),
@@ -49,4 +57,5 @@ urlpatterns = [
     path('despachoCombustible/crear', views.crear_despachoCombustible, name='crear_despachoCombustible'),
     path('despachoCombustible/editar/<int:idDespachoCombustible>', views.editar_despachoCombustible, name='editar_despachoCombustible'),
     path('despachoCombustible/borrar/<int:idDespachoCombustible>', views.borrar_despachoCombustible, name='borrar_despachoCombustible'),
+    path('', include(router.urls)),
 ]
