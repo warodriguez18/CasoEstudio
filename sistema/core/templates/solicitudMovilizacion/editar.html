@@ -1,0 +1,20 @@
+{% extends "core/basemenu.html" %} 
+
+{% block title %} Lista de solicitud de movilización {% endblock %}
+
+{% block content %}
+{% csrf_token %}
+
+    <div class="card">
+        <div class="card-header">
+            Editar solicitud de movilización
+        </div>
+        <div class="card-body">
+            <h4 class="card-title">Datos de solicitud de movilización</h4>
+            {% include "solicitudMovilizacion/form.html" %}
+        </div>
+        <div class="card-footer text-muted">
+        </div>
+    </div>
+
+{% endblock %}

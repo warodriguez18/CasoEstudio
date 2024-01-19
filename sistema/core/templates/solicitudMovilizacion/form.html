@@ -1,0 +1,23 @@
+<form enctype="multipart/form-data" method="post">
+  {% csrf_token %}
+  {% for item in formulario %}
+    <div class="mb-3">
+      <label for="" class="form-label">{{ item.label }}:</label>
+      {% if item.label == 'Personal' or item.label == 'Vehículo' or item.label == 'Hora de Salida' or item.label == 'Fecha de Solicitud' or item.label == 'Fecha de Salida' %}
+        {{item}}
+      {% else %}
+        <input type ="{{ item.field.widget.input_type }}"
+          class="form-control" 
+          name="{{ item.name }}" 
+          id="" 
+          aria-describedby="helpId" 
+          placeholder="{{ item.label }}"
+          value="{{ item.value | default:'' }}"
+          >
+      {% endif %}  
+    </div>
+    <div class="col-12 help-"> {{ item.errors }} </div>
+  {% endfor %}
+  <input type="submit" class="btn btn-success" value="Guardar">
+  <a name="" id="" class="btn btn-primary" href="{% url 'solicitudMovilizaciones' %}" role="button">Cancelar</a>
+</form>

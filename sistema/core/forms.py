@@ -197,3 +197,180 @@ class DespachoCombustibleForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(DespachoCombustibleForm, self).__init__(*args, **kwargs)
         self.fields['idOrdenCombustible'].queryset = OrdenCombustible.objects.all().filter(estado = True)
+
+
+class SolicitudMovilizacionForm(forms.ModelForm):
+    class Meta:
+        model = SolicitudMovilizacion
+        fields = [
+                'idPersonal',
+                'idVehiculo',
+                'fechaSolicitud',
+                'fechaSalida',
+                'horaSalida',
+                'motivo',
+                'ruta',
+                'kilometraje',
+                'numeroOcupantes',
+                'datosOcupantes',]
+        
+        widgets = { 
+        'idPersonal': 
+            forms.Select(
+            attrs={
+                "class": "form-control chosen-select",
+                "data-placeholder": "Selecciona un Personal",
+                "style": "width: 100%;",
+            }
+        ),
+        'idVehiculo': 
+            forms.Select(
+            attrs={
+                "class": "form-control chosen-select",
+                "data-placeholder": "Selecciona un Vehiculo",
+                "style": "width: 100%;",
+            }
+        ),
+        'fechaSolicitud': forms.DateInput(format=('%Y-%m-%d'), 
+                                          attrs={'class': 'form-control', 'type': 'date'},
+        ),
+        'fechaSalida': forms.DateInput(format=('%Y-%m-%d'), 
+                                          attrs={'class': 'form-control', 'type': 'date'},
+        ),
+        "horaSalida": forms.TimeInput(format='%H:%M',
+                                      attrs={'class': 'form-control', 
+                                             'type': 'time',}),
+        
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(SolicitudMovilizacionForm, self).__init__(*args, **kwargs)
+        self.fields['idPersonal'].queryset = Personal.objects.all().filter(estado = True)
+        self.fields['idVehiculo'].queryset = Vehiculo.objects.all().filter(estado = True)
+
+
+class OrdenMovilizacionForm(forms.ModelForm):
+    class Meta:
+        model = OrdenMovilizacion
+        fields = [
+                'idSolicitudMovilizacion',
+                'idPersonal',
+                'idEstado',
+                'fechaSolicitud',]
+        
+        widgets = { 
+        'idPersonal': 
+            forms.Select(
+            attrs={
+                "class": "form-control chosen-select",
+                "data-placeholder": "Selecciona un Personal",
+                "style": "width: 100%;",
+            }
+        ),
+        'idSolicitudMovilizacion': 
+            forms.Select(
+            attrs={
+                "class": "form-control chosen-select",
+                "data-placeholder": "Selecciona un Vehiculo",
+                "style": "width: 100%;",
+            }
+        ),
+        'idEstado': 
+            forms.Select(
+            attrs={
+                "class": "form-control chosen-select",
+                "data-placeholder": "Selecciona un Estado",
+                "style": "width: 100%;",
+            }
+        ),
+        'fechaSolicitud': forms.DateInput(format=('%Y-%m-%d'), 
+                                          attrs={'class': 'form-control', 'type': 'date'},
+        ),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(OrdenMovilizacionForm, self).__init__(*args, **kwargs)
+        self.fields['idPersonal'].queryset = Personal.objects.all().filter(estado = True)
+        self.fields['idSolicitudMovilizacion'].queryset = SolicitudMovilizacion.objects.all().filter(estado = True)
+        self.fields['idEstado'].queryset = Estado.objects.all().filter(estado = True)
+
+class PersonalForm(forms.ModelForm):
+    class Meta:
+        model = Personal
+        fields = [
+                'idCanton',
+                'idRango',
+                'dni',
+                'nombre',
+                'apellido',
+                'tipoSangre',
+                'fechaNacimiento',
+                'telefonoCelular',
+                ]
+        
+        widgets = { 
+        'idCanton': 
+            forms.Select(
+            attrs={
+                "class": "form-control chosen-select",
+                "data-placeholder": "Selecciona un Canton",
+                "style": "width: 100%;",
+            }
+        ),
+        'idRango': 
+            forms.Select(
+            attrs={
+                "class": "form-control chosen-select",
+                "data-placeholder": "Selecciona un Rango",
+                "style": "width: 100%;",
+            }
+        ),
+        'fechaNacimiento': forms.DateInput(format=('%Y-%m-%d'), 
+                                          attrs={'class': 'form-control', 'type': 'date'},
+        ),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(PersonalForm, self).__init__(*args, **kwargs)
+        self.fields['idCanton'].queryset = Canton.objects.all().filter(estado = True)
+        self.fields['idRango'].queryset = Rango.objects.all().filter(estado = True)
+
+class VehiculoForm(forms.ModelForm):
+    class Meta:
+        model = Vehiculo
+        fields = [
+                'idMarca',
+                'idTipoVehiculo',
+                'placa',
+                'chasis',
+                'modelo',
+                'motor',
+                'kilometraje',
+                'cilindraje',
+                'capacidadCarga',
+                'capacidadPasajeros',
+                ]
+        
+        widgets = { 
+        'idMarca': 
+            forms.Select(
+            attrs={
+                "class": "form-control chosen-select",
+                "data-placeholder": "Selecciona un Marca",
+                "style": "width: 100%;",
+            }
+        ),
+        'idTipoVehiculo': 
+            forms.Select(
+            attrs={
+                "class": "form-control chosen-select",
+                "data-placeholder": "Selecciona un TipoVehiculo",
+                "style": "width: 100%;",
+            }
+        ),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(VehiculoForm, self).__init__(*args, **kwargs)
+        self.fields['idMarca'].queryset = Marca.objects.all().filter(estado = True)
+        self.fields['idTipoVehiculo'].queryset = TipoVehiculo.objects.all().filter(estado = True)

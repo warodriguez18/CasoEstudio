@@ -1,0 +1,57 @@
+{% extends "core/basemenu.html" %} 
+
+{% block title %} Lista de solicitud de movilización {% endblock %}
+
+{% block content %}
+{% csrf_token %}
+<div class="card">
+    <div class="card-header">
+      <a name="" id="" class="btn btn-success" href="{% url 'crear_solicitudMovilizacion' %}" role="button">NUEVO REGISTRO</a>
+    </div>
+    <div class="card-body">
+      <h4 class="card-title">SOLICITUD DE MOVILIZACIÓN</h4>
+      <div class="table-responsive">
+        <table class="table table-primary">
+          <thead>
+            <tr>
+              <th scope="col">Código</th>
+              <th scope="col">Personal</th>
+              <th scope="col">Vehiculo</th>
+              <th scope="col">Fecha de Solicitud</th>
+              <th scope="col">Fecha de Salida</th>
+              <th scope="col">Hora de Salida</th>
+              <th scope="col">Motivo</th>
+              <th scope="col">Km</th>
+              <th scope="col">Ocupantes</th>
+              <th scope="col">Datos de Ocupantes</th>
+              <th scope="col">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for solicitudMovilizacion in solicitudMovilizaciones %}
+            <tr class="">
+              <td scope="row">{{ solicitudMovilizacion.idSolicitudMovilizacion }}</td>
+              <td>{{ solicitudMovilizacion.idPersonal }}</td>
+              <td>{{ solicitudMovilizacion.idVehiculo }}</td>
+              <td>{{ solicitudMovilizacion.fechaSolicitud }}</td>
+              <td>{{ solicitudMovilizacion.fechaSalida }}</td>
+              <td>{{ solicitudMovilizacion.horaSalida }}</td>
+              <td>{{ solicitudMovilizacion.motivo }}</td>
+              <td>{{ solicitudMovilizacion.kilometraje }}</td>
+              <td>{{ solicitudMovilizacion.numeroOcupantes }}</td>
+              <td>{{ solicitudMovilizacion.datosOcupantes }}</td>
+              <td> 
+                <a name="" id="" class="btn btn-info" href="{% url 'editar_solicitudMovilizacion' solicitudMovilizacion.idSolicitudMovilizacion %}" role="button">Editar</a>
+                <a name="" id="" class="btn btn-danger" href="{% url 'borrar_solicitudMovilizacion' solicitudMovilizacion.idSolicitudMovilizacion %}" role="button">Borrar</a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="card-footer text-muted">
+    </div>
+  </div>
+
+{% endblock %}
