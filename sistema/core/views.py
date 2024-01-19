@@ -4,7 +4,8 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
 from django.db import IntegrityError
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
+
 from .models import *
 from .forms import *
 
@@ -379,7 +380,7 @@ def crear_subCircuito(request):
 def editar_subCircuito(request, idSubCiruito):
     subCircuito = get_object_or_404(SubCiruito, pk=idSubCiruito)
     if request.method == 'GET':
-        formulario = SubCiruito(instance=subCircuito)
+        formulario = SubCircuitoForm(instance=subCircuito)
         return render(request, 'subCircuito/editar.html', {'formulario': formulario})
     else:
         try:
@@ -612,3 +613,213 @@ def borrar_despachoCombustible(request, idDespachoCombustible):
     tipoPeticion.usuario_modificacion = request.user.username
     tipoPeticion.save()
     return redirect('despachoCombustibles')
+
+
+#####################################################################################################################
+@login_required
+def solicitudMovilizaciones(request):
+    solicitudMovilizaciones = SolicitudMovilizacion.objects.filter(estado=True)
+    return render(request, 'solicitudMovilizacion/index.html', {'solicitudMovilizaciones': solicitudMovilizaciones})
+
+@login_required
+def crear_solicitudMovilizacion(request):
+    if request.method == 'GET':
+        return render(request, 'solicitudMovilizacion/crear.html', {'formulario': SolicitudMovilizacionForm})
+    else:
+        try:
+            formulario = SolicitudMovilizacionForm(request.POST or None)
+            if formulario.is_valid():
+                new_formulario = formulario.save(commit=False)
+                new_formulario.usuario_creacion = request.user.username
+                formulario.save()
+                return redirect('solicitudMovilizaciones')
+            else:
+                return render(request, 'solicitudMovilizacion/crear.html', {'formulario': formulario})
+        except ValueError:
+            return render(request, 'solicitudMovilizacion/crear.html', 
+                          {'formulario': SolicitudMovilizacionForm, 'error': 'Se han pasado datos incorrectos. Inténtalo de nuevo.'})
+
+@login_required
+def editar_solicitudMovilizacion(request, idSolicitudMovilizacion):
+    solicitudMovilizacion = get_object_or_404(SolicitudMovilizacion, pk=idSolicitudMovilizacion)
+    if request.method == 'GET':
+        formulario = SolicitudMovilizacionForm(instance=solicitudMovilizacion)
+        return render(request, 'solicitudMovilizacion/editar.html', {'formulario': formulario})
+    else:
+        try:
+            formulario = SolicitudMovilizacionForm(request.POST or None, instance=solicitudMovilizacion)
+            if formulario.is_valid():
+                new_formulario = formulario.save(commit=False)
+                new_formulario.usuario_modificacion = request.user.username
+                formulario.save()
+                return redirect('solicitudMovilizaciones')
+            else:
+                return render(request, 'solicitudMovilizacion/editar.html', {'formulario': formulario})
+        except ValueError:
+            return render(request, 'solicitudMovilizacion/editar.html', 
+                          {'formulario': SolicitudMovilizacionForm, 'error': 'Se han pasado datos incorrectos. Inténtalo de nuevo.'})
+
+@login_required
+def borrar_solicitudMovilizacion(request, idSolicitudMovilizacion):
+    tipoPeticion = get_object_or_404(SolicitudMovilizacion, pk=idSolicitudMovilizacion)
+    tipoPeticion.estado = False
+    tipoPeticion.usuario_modificacion = request.user.username
+    tipoPeticion.save()
+    return redirect('solicitudMovilizaciones')
+
+
+#####################################################################################################################
+@login_required
+def ordenMovilizaciones(request):
+    ordenMovilizaciones = OrdenMovilizacion.objects.filter(estado=True)
+    return render(request, 'ordenMovilizacion/index.html', {'ordenMovilizaciones': ordenMovilizaciones})
+
+@login_required
+def crear_ordenMovilizacion(request):
+    if request.method == 'GET':
+        return render(request, 'ordenMovilizacion/crear.html', {'formulario': OrdenMovilizacionForm})
+    else:
+        try:
+            formulario = OrdenMovilizacionForm(request.POST or None)
+            if formulario.is_valid():
+                new_formulario = formulario.save(commit=False)
+                new_formulario.usuario_creacion = request.user.username
+                formulario.save()
+                return redirect('ordenMovilizaciones')
+            else:
+                return render(request, 'ordenMovilizacion/crear.html', {'formulario': formulario})
+        except ValueError:
+            return render(request, 'ordenMovilizacion/crear.html', 
+                          {'formulario': OrdenMovilizacionForm, 'error': 'Se han pasado datos incorrectos. Inténtalo de nuevo.'})
+
+@login_required
+def editar_ordenMovilizacion(request, idOrdenMovilizacion):
+    ordenMovilizacion = get_object_or_404(OrdenMovilizacion, pk=idOrdenMovilizacion)
+    if request.method == 'GET':
+        formulario = OrdenMovilizacionForm(instance=ordenMovilizacion)
+        return render(request, 'ordenMovilizacion/editar.html', {'formulario': formulario})
+    else:
+        try:
+            formulario = OrdenMovilizacionForm(request.POST or None, instance=ordenMovilizacion)
+            if formulario.is_valid():
+                new_formulario = formulario.save(commit=False)
+                new_formulario.usuario_modificacion = request.user.username
+                formulario.save()
+                return redirect('ordenMovilizaciones')
+            else:
+                return render(request, 'ordenMovilizacion/editar.html', {'formulario': formulario})
+        except ValueError:
+            return render(request, 'ordenMovilizacion/editar.html', 
+                          {'formulario': OrdenMovilizacionForm, 'error': 'Se han pasado datos incorrectos. Inténtalo de nuevo.'})
+
+@login_required
+def borrar_ordenMovilizacion(request, idOrdenMovilizacion):
+    tipoPeticion = get_object_or_404(OrdenMovilizacion, pk=idOrdenMovilizacion)
+    tipoPeticion.estado = False
+    tipoPeticion.usuario_modificacion = request.user.username
+    tipoPeticion.save()
+    return redirect('ordenMovilizaciones')
+
+#####################################################################################################################
+@login_required
+def personales(request):
+    personales = Personal.objects.filter(estado=True)
+    return render(request, 'personal/index.html', {'personales': personales})
+
+@login_required
+def crear_personal(request):
+    if request.method == 'GET':
+        return render(request, 'personal/crear.html', {'formulario': PersonalForm})
+    else:
+        try:
+            formulario = PersonalForm(request.POST or None)
+            if formulario.is_valid():
+                new_formulario = formulario.save(commit=False)
+                new_formulario.usuario_creacion = request.user.username
+                formulario.save()
+                return redirect('personales')
+            else:
+                return render(request, 'personal/crear.html', {'formulario': formulario})
+        except ValueError:
+            return render(request, 'personal/crear.html', 
+                          {'formulario': PersonalForm, 'error': 'Se han pasado datos incorrectos. Inténtalo de nuevo.'})
+
+@login_required
+def editar_personal(request, idPersonal):
+    personal = get_object_or_404(Personal, pk=idPersonal)
+    if request.method == 'GET':
+        formulario = PersonalForm(instance=personal)
+        return render(request, 'personal/editar.html', {'formulario': formulario})
+    else:
+        try:
+            formulario = PersonalForm(request.POST or None, instance=personal)
+            if formulario.is_valid():
+                new_formulario = formulario.save(commit=False)
+                new_formulario.usuario_modificacion = request.user.username
+                formulario.save()
+                return redirect('personales')
+            else:
+                return render(request, 'personal/editar.html', {'formulario': formulario})
+        except ValueError:
+            return render(request, 'personal/editar.html', 
+                          {'formulario': PersonalForm, 'error': 'Se han pasado datos incorrectos. Inténtalo de nuevo.'})
+
+@login_required
+def borrar_personal(request, idPersonal):
+    tipoPeticion = get_object_or_404(Personal, pk=idPersonal)
+    tipoPeticion.estado = False
+    tipoPeticion.usuario_modificacion = request.user.username
+    tipoPeticion.save()
+    return redirect('personales')
+
+#####################################################################################################################
+@login_required
+def vehiculos(request):
+    vehiculos = Vehiculo.objects.filter(estado=True)
+    return render(request, 'vehiculo/index.html', {'vehiculos': vehiculos})
+
+@login_required
+def crear_vehiculo(request):
+    if request.method == 'GET':
+        return render(request, 'vehiculo/crear.html', {'formulario': VehiculoForm})
+    else:
+        try:
+            formulario = VehiculoForm(request.POST or None)
+            if formulario.is_valid():
+                new_formulario = formulario.save(commit=False)
+                new_formulario.usuario_creacion = request.user.username
+                formulario.save()
+                return redirect('vehiculos')
+            else:
+                return render(request, 'vehiculo/crear.html', {'formulario': formulario})
+        except ValueError:
+            return render(request, 'vehiculo/crear.html', 
+                          {'formulario': VehiculoForm, 'error': 'Se han pasado datos incorrectos. Inténtalo de nuevo.'})
+
+@login_required
+def editar_vehiculo(request, idVehiculo):
+    vehiculo = get_object_or_404(Vehiculo, pk=idVehiculo)
+    if request.method == 'GET':
+        formulario = VehiculoForm(instance=vehiculo)
+        return render(request, 'vehiculo/editar.html', {'formulario': formulario})
+    else:
+        try:
+            formulario = VehiculoForm(request.POST or None, instance=vehiculo)
+            if formulario.is_valid():
+                new_formulario = formulario.save(commit=False)
+                new_formulario.usuario_modificacion = request.user.username
+                formulario.save()
+                return redirect('vehiculos')
+            else:
+                return render(request, 'vehiculo/editar.html', {'formulario': formulario})
+        except ValueError:
+            return render(request, 'vehiculo/editar.html', 
+                          {'formulario': VehiculoForm, 'error': 'Se han pasado datos incorrectos. Inténtalo de nuevo.'})
+
+@login_required
+def borrar_vehiculo(request, idVehiculo):
+    tipoPeticion = get_object_or_404(Vehiculo, pk=idVehiculo)
+    tipoPeticion.estado = False
+    tipoPeticion.usuario_modificacion = request.user.username
+    tipoPeticion.save()
+    return redirect('vehiculos')

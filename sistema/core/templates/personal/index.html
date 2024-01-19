@@ -1,0 +1,55 @@
+{% extends "core/basemenu.html" %} 
+
+{% block title %} Lista de personal policial {% endblock %}
+
+{% block content %}
+{% csrf_token %}
+<div class="card">
+    <div class="card-header">
+      <a name="" id="" class="btn btn-success" href="{% url 'crear_personal' %}" role="button">NUEVO REGISTRO</a>
+    </div>
+    <div class="card-body">
+      <h4 class="card-title">PERSONAL POLICIAL</h4>
+      <div class="table-responsive">
+        <table class="table table-primary">
+          <thead>
+            <tr>
+              <th scope="col">Código</th>
+              <th scope="col">Cantón</th>
+              <th scope="col">Rango</th>
+              <th scope="col">Cédula de Identidad</th>
+              <th scope="col">Nombres</th>
+              <th scope="col">Apellidos</th>
+              <th scope="col">Tipo de Sangre</th>
+              <th scope="col">Fecha de Nacimiento</th>
+              <th scope="col">Teléfono Celular</th>
+              <th scope="col">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for personal in personales %}
+            <tr class="">
+              <td scope="row">{{ personal.idPersonal }}</td>
+              <td>{{ personal.idCanton }}</td>
+              <td>{{ personal.idRango }}</td>
+              <td>{{ personal.dni }}</td>
+              <td>{{ personal.nombre }}</td>
+              <td>{{ personal.apellido }}</td>
+              <td>{{ personal.tipoSangre }}</td>
+              <td>{{ personal.fechaNacimiento }}</td>
+              <td>{{ personal.telefonoCelular }}</td>
+              <td> 
+                <a name="" id="" class="btn btn-info" href="{% url 'editar_personal' personal.idPersonal %}" role="button">Editar</a>
+                <a name="" id="" class="btn btn-danger" href="{% url 'borrar_personal' personal.idPersonal %}" role="button">Borrar</a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="card-footer text-muted">
+    </div>
+  </div>
+
+{% endblock %}

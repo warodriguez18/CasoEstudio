@@ -96,7 +96,7 @@ class Rango(Auditoria):
 
 class Personal(Auditoria):
     idPersonal = models.BigAutoField(auto_created=True, primary_key=True, unique=True)
-    idCanton = models.ForeignKey(Canton, on_delete=models.CASCADE, verbose_name='Canton')
+    idCanton = models.ForeignKey(Canton, on_delete=models.CASCADE, verbose_name='Cantón')
     idRango = models.ForeignKey(Rango, on_delete=models.CASCADE, verbose_name='Rango')
     dni = models.CharField(blank=False, max_length=10, verbose_name='Identificación')
     nombre = models.CharField(blank=False, max_length=200, verbose_name='Nombres')
@@ -463,3 +463,44 @@ class DespachoCombustible(Auditoria):
         ordering = ['fechaOrden']
         verbose_name = 'Despacho de Combustible'
         verbose_name_plural = 'Despachos de Combustible'
+
+class SolicitudMovilizacion(Auditoria):
+    idSolicitudMovilizacion = models.BigAutoField(auto_created=True, primary_key=True, unique=True)
+    idPersonal = models.ForeignKey(Personal, on_delete=models.CASCADE, verbose_name='Personal')
+    idVehiculo = models.ForeignKey(Vehiculo, on_delete=models.CASCADE, verbose_name='Vehículo')
+    fechaSolicitud = models.DateField(blank=False, verbose_name='Fecha de Solicitud')
+    fechaSalida = models.DateField(blank=False, verbose_name='Fecha de Salida')
+    horaSalida = models.TimeField(blank=False, verbose_name='Hora de Salida')
+    motivo = models.CharField(blank=True, max_length=400, verbose_name='Motivo')
+    ruta = models.CharField(blank=True, max_length=400, verbose_name='Ruta')
+    kilometraje = models.DecimalField(blank=False, max_digits=10, decimal_places=2, verbose_name='Kilometraje')
+    numeroOcupantes = models.IntegerField(blank=False, verbose_name='Número de Ocupantes')
+    datosOcupantes = models.CharField(blank=False, max_length=400, verbose_name='Datos de Ocupantes')
+    estado = models.BooleanField(blank=False, default=True, verbose_name='Estado de Orden de Combustible', editable=False)
+
+    def __str__(self):
+        return 'Codigo: ' + str(self.idSolicitudMovilizacion) + ': ' + str(self.fechaSolicitud) + ': ' + self.idPersonal.apellido + ': '+ self.idPersonal.nombre + ': ' + self.idVehiculo.placa
+
+    class Meta: 
+        db_table = 'solicitudMovilizacion'
+        ordering = ['fechaSolicitud']
+        verbose_name = 'Solicitud de Movilización'
+        verbose_name_plural = 'Solicitudes de Movilización'
+
+class OrdenMovilizacion(Auditoria):
+    idOrdenMovilizacion = models.BigAutoField(auto_created=True, primary_key=True, unique=True)
+    idPersonal = models.ForeignKey(Personal, on_delete=models.CASCADE, verbose_name='Personal')
+    idSolicitudMovilizacion = models.ForeignKey(SolicitudMovilizacion, on_delete=models.CASCADE, verbose_name='Solicitud de Movilización')
+    idEstado = models.ForeignKey(Estado, on_delete=models.CASCADE, verbose_name='Estado')
+    fechaSolicitud = models.DateField(blank=False, verbose_name='Fecha de Solicitud')
+    
+    estado = models.BooleanField(blank=False, default=True, verbose_name='Estado de Orden de Combustible', editable=False)
+
+    def __str__(self):
+        return 'Codigo: ' + str(self.idOrdenMovilizacion) + ': ' + str(self.fechaSolicitud) + ': ' + self.idPersonal.apellido + ': '+ self.idPersonal.nombre
+
+    class Meta: 
+        db_table = 'ordenMovilizacion'
+        ordering = ['fechaSolicitud']
+        verbose_name = 'Orden de Movilización'
+        verbose_name_plural = 'Ordenes de Movilización'

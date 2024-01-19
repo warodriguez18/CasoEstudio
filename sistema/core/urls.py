@@ -57,5 +57,30 @@ urlpatterns = [
     path('despachoCombustible/crear', views.crear_despachoCombustible, name='crear_despachoCombustible'),
     path('despachoCombustible/editar/<int:idDespachoCombustible>', views.editar_despachoCombustible, name='editar_despachoCombustible'),
     path('despachoCombustible/borrar/<int:idDespachoCombustible>', views.borrar_despachoCombustible, name='borrar_despachoCombustible'),
+    #Orden de Personal
+    path('personales/', views.personales, name='personales'),
+    path('personal/crear', views.crear_personal, name='crear_personal'),
+    path('personal/editar/<int:idPersonal>', views.editar_personal, name='editar_personal'),
+    path('personal/borrar/<int:idPersonal>', views.borrar_personal, name='borrar_personal'),
+
+    #Solicitud de Vehiculo
+    path('vehiculos/', views.vehiculos, name='vehiculos'),
+    path('vehiculo/crear', views.crear_vehiculo, name='crear_vehiculo'),
+    path('vehiculo/editar/<int:idVehiculo>', views.editar_vehiculo, name='editar_vehiculo'),
+    path('vehiculo/borrar/<int:idVehiculo>', views.borrar_vehiculo, name='borrar_vehiculo'),
+
+    #Solicitud de Movilizacion
+    path('solicitudMovilizaciones/', views.solicitudMovilizaciones, name='solicitudMovilizaciones'),
+    path('solicitudMovilizacion/crear', views.crear_solicitudMovilizacion, name='crear_solicitudMovilizacion'),
+    path('solicitudMovilizacion/editar/<int:idSolicitudMovilizacion>', views.editar_solicitudMovilizacion, name='editar_solicitudMovilizacion'),
+    path('solicitudMovilizacion/borrar/<int:idSolicitudMovilizacion>', views.borrar_solicitudMovilizacion, name='borrar_solicitudMovilizacion'),
+
+    #Orden de Movilizacion
+    path('ordenMovilizaciones/', views.ordenMovilizaciones, name='ordenMovilizaciones'),
+    path('ordenMovilizacion/crear', views.crear_ordenMovilizacion, name='crear_ordenMovilizacion'),
+    path('ordenMovilizacion/editar/<int:idOrdenMovilizacion>', views.editar_ordenMovilizacion, name='editar_ordenMovilizacion'),
+    path('ordenMovilizacion/borrar/<int:idOrdenMovilizacion>', views.borrar_ordenMovilizacion, name='borrar_ordenMovilizacion'),
+
+
     path('', include(router.urls)),
 ]

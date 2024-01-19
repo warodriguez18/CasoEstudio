@@ -1,0 +1,47 @@
+{% extends "core/basemenu.html" %} 
+
+{% block title %} Lista de orden movilización {% endblock %}
+
+{% block content %}
+{% csrf_token %}
+<div class="card">
+    <div class="card-header">
+      <a name="" id="" class="btn btn-success" href="{% url 'crear_ordenMovilizacion' %}" role="button">NUEVO REGISTRO</a>
+    </div>
+    <div class="card-body">
+      <h4 class="card-title">ORDEN DE MOVILIZACIÓN</h4>
+      <div class="table-responsive">
+        <table class="table table-primary">
+          <thead>
+            <tr>
+              <th scope="col">Código</th>
+              <th scope="col">Solicitud de Movilizacion</th>
+              <th scope="col">Personal</th>
+              <th scope="col">Estado de Orden</th>
+              <th scope="col">Fecha de Solicitud</th>
+              <th scope="col">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for ordenMovilizacion in ordenMovilizaciones %}
+            <tr class="">
+              <td scope="row">{{ ordenMovilizacion.idOrdenMovilizacion }}</td>
+              <td>{{ ordenMovilizacion.idSolicitudMovilizacion }}</td>
+              <td>{{ ordenMovilizacion.idPersonal }}</td>
+              <td>{{ ordenMovilizacion.idEstado }}</td>
+              <td>{{ ordenMovilizacion.fechaSolicitud }}</td>
+              <td> 
+                <a name="" id="" class="btn btn-info" href="{% url 'editar_ordenMovilizacion' ordenMovilizacion.idOrdenMovilizacion %}" role="button">Editar</a>
+                <a name="" id="" class="btn btn-danger" href="{% url 'borrar_ordenMovilizacion' ordenMovilizacion.idOrdenMovilizacion %}" role="button">Borrar</a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="card-footer text-muted">
+    </div>
+  </div>
+
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends "core/basemenu.html" %} 
+
+{% block title %} Lista de vehículo {% endblock %}
+
+{% block content %}
+{% csrf_token %}
+<div class="card">
+    <div class="card-header">
+      <a name="" id="" class="btn btn-success" href="{% url 'crear_vehiculo' %}" role="button">NUEVO REGISTRO</a>
+    </div>
+    <div class="card-body">
+      <h4 class="card-title">VEHÍCULO</h4>
+      <div class="table-responsive">
+        <table class="table table-primary">
+          <thead>
+            <tr>
+              <th scope="col">Código</th>
+              <th scope="col">Marca</th>
+              <th scope="col">Tipo de Vehículo</th>
+              <th scope="col">Placa</th>
+              <th scope="col">chasis</th>
+              <th scope="col">Modelo</th>
+              <th scope="col">Motor</th>
+              <th scope="col">Kilometraje</th>
+              <th scope="col">Cilindraje</th>
+              <th scope="col">Capacidad de Carga</th>
+              <th scope="col">Capacidad de Pasajeros</th>
+              <th scope="col">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for vehiculo in vehiculos %}
+            <tr class="">
+              <td scope="row">{{ vehiculo.idVehiculo }}</td>
+              <td>{{ vehiculo.idMarca }}</td>
+              <td>{{ vehiculo.idTipoVehiculo }}</td>
+              <td>{{ vehiculo.placa }}</td>
+              <td>{{ vehiculo.chasis }}</td>
+              <td>{{ vehiculo.modelo }}</td>
+              <td>{{ vehiculo.motor }}</td>
+              <td>{{ vehiculo.kilometraje }}</td>
+              <td>{{ vehiculo.cilindraje }}</td>
+              <td>{{ vehiculo.capacidadCarga }}</td>
+              <td>{{ vehiculo.capacidadPasajeros }}</td>
+              <td> 
+                <a name="" id="" class="btn btn-info" href="{% url 'editar_vehiculo' vehiculo.idVehiculo %}" role="button">Editar</a>
+                <a name="" id="" class="btn btn-danger" href="{% url 'borrar_vehiculo' vehiculo.idVehiculo %}" role="button">Borrar</a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="card-footer text-muted">
+    </div>
+  </div>
+
+{% endblock %}
